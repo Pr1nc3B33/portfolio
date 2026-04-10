@@ -15,6 +15,7 @@
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
+    <li><a href="#certs">Certs</a></li>
     <li><a href="#security">Security</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -148,10 +149,10 @@
         <span class="email-dots">&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;</span>
         <span class="email-hint">click to reveal email</span>
       </span>
-      <a id="email-link" class="contact-email email-hidden" href="#">daniel@danielbailey.dev</a>
+      <a id="email-link" class="contact-email email-hidden" href="#"><span class="__cf_email__" data-cfemail="99fdf8f7f0fcf5d9fdf8f7f0fcf5fbf8f0f5fce0b7fdfcef">[email&#160;protected]</span></a>
     </div>
     <div class="hero-btns hero-btns-center">
-      <a class="btn btn-fill" href="mailto:daniel@danielbailey.dev">Send a Message</a>
+      <a class="btn btn-fill" href="/cdn-cgi/l/email-protection#a1c5c0cfc8c4cde1c5c0cfc8c4cdc3c0c8cdc4d88fc5c4d7">Send a Message</a>
       <a class="btn" href="#hero">Back to Top</a>
     </div>
     <div class="social-row">
@@ -169,7 +170,7 @@
   <span class="footer-mono">Full Stack &nbsp;·&nbsp; Penetration Testing</span>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 
   // email reveal - typescript style with type annotations in comments
   function revealEmail(): void {
@@ -196,13 +197,4 @@
         emailLink.style.transform = 'translateY(0)';
         emailLink.href = 'mailto:daniel@danielbailey.dev';
       });
-      
-      container.style.cursor = 'default';
-    }, 250);
-  }
-
-  // Nav scroll effect
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 40);
-  });
+  

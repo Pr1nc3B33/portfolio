@@ -3,221 +3,300 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Daniel Bailey — Full Stack Engineer & Penetration Tester</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css">
+<title>Daniel Bailey — Backend API Architect</title>
+<meta name="description" content="Daniel Bailey — Backend API architect. I design REST APIs, data models, and PostgreSQL schemas that hold up under load." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-<!-- navbar - had to watch like 3 youtube videos to get the scroll effect working -->
+<!-- NAV -->
 <nav id="navbar">
-  <a class="nav-logo" href="#hero">DB</a>
+  <a class="nav-logo" href="#hero"><span class="dot"></span>DB</a>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#certs">Certs</a></li>
-    <li><a href="#security">Security</a></li>
+    <li><a href="#schema">Schema</a></li>
+    <li><a href="#apis">APIs</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#work">Work</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
 
-<!-- hero - this is the first thing people see so i spent way too long on this -->
+<!-- HERO -->
 <section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <div class="hero-tag">Available for Work &nbsp;·&nbsp; Remote &amp; On-Site</div>
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="wrap hero-content">
+    <div class="hero-tag"><span class="pulse"></span>Available · Backend &amp; Distributed Systems</div>
     <h1 class="hero-name">Daniel<br><span>Bailey</span></h1>
-    <p class="hero-sub">Full Stack Engineer &amp; Penetration Tester. Building robust systems by day, breaking them by night — so others can't.</p>
+    <p class="hero-sub">Backend API architect. I design the data model first.</p>
+    <p class="hero-desc">REST APIs, relational schemas, and the integrity rules that keep them honest — built with FastAPI and PostgreSQL, shaped to survive real traffic instead of a demo.</p>
     <div class="hero-btns">
-      <a class="btn btn-fill" href="#contact">Get in Touch</a>
-      <a class="btn" href="#skills">View Skills</a>
+      <a class="btn btn-fill" href="#schema">View the schema →</a>
+      <a class="btn" href="#contact">Get in touch</a>
     </div>
   </div>
-  <div class="scroll-cue">Scroll to explore</div>
 </section>
 
-<!-- about section -->
-<section id="about">
-  <div class="full-width">
-    <p class="section-label">// About</p>
-    <div class="divider"></div>
-    <h2 class="section-title">Who I Am</h2>
-    <div class="about-grid">
-      <div class="about-text">
-        <p>I'm Daniel Bailey — a Full Stack Engineer and Penetration Tester based in Southern California. I build production-ready web applications and conduct security assessments to keep them locked down.</p>
-        <p>I recently completed an intensive bootcamp where I went deep on both software engineering and cybersecurity — graduating with real projects, real skills, and a serious passion for both sides of the stack.</p>
-        <p>Whether you need something built, something tested, or both — I'm ready to get to work.</p>
-      </div>
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-num">5+</div>
-          <div class="stat-label">Years Engineering</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">5+</div>
-          <div class="stat-label">Projects Shipped</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">30+</div>
-          <div class="stat-label">Pen Tests Completed</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">0</div>
-          <div class="stat-label">Breaches on My Watch</div>
+<!-- SCHEMA -->
+<section id="schema" class="block">
+  <div class="wrap">
+    <div class="eyebrow reveal">Data modeling</div>
+    <h2 class="section-title reveal">The schema is the architecture.</h2>
+    <p class="section-lead reveal">Before a single endpoint, I model the entities, the keys, and the relationships. Below is the live data model from <b style="color:var(--text)">MedBridge</b> — a patient-facing health-records platform — normalized to keep one source of truth and an audit trail on everything.</p>
+
+    <div class="schema-canvas">
+      <!-- users -->
+      <div class="table-card reveal">
+        <div class="table-head"><span class="table-name">users</span><span class="table-icon">8 cols</span></div>
+        <div class="table-rows">
+          <div class="row"><span class="col">id <span class="badge pk">PK</span></span><span class="type">uuid</span></div>
+          <div class="row"><span class="col">email <span class="badge uq">UQ</span></span><span class="type">citext</span></div>
+          <div class="row"><span class="col">password_hash</span><span class="type">text</span></div>
+          <div class="row"><span class="col">role</span><span class="type">enum</span></div>
+          <div class="row"><span class="col">created_at</span><span class="type">timestamptz</span></div>
         </div>
       </div>
+      <!-- sessions -->
+      <div class="table-card reveal">
+        <div class="table-head"><span class="table-name">sessions</span><span class="table-icon">6 cols</span></div>
+        <div class="table-rows">
+          <div class="row"><span class="col">id <span class="badge pk">PK</span></span><span class="type">uuid</span></div>
+          <div class="row"><span class="col">user_id <span class="badge fk">FK</span></span><span class="type">uuid</span></div>
+          <div class="row"><span class="col">refresh_token <span class="badge uq">UQ</span></span><span class="type">text</span></div>
+          <div class="row"><span class="col">expires_at</span><span class="type">timestamptz</span></div>
+          <div class="row"><span class="col">revoked</span><span class="type">boolean</span></div>
+        </div>
+      </div>
+      <!-- documents -->
+      <div class="table-card reveal">
+        <div class="table-head"><span class="table-name">documents</span><span class="table-icon">7 cols</span></div>
+        <div class="table-rows">
+          <div class="row"><span class="col">id <span class="badge pk">PK</span></span><span class="type">uuid</span></div>
+          <div class="row"><span class="col">user_id <span class="badge fk">FK</span></span><span class="type">uuid</span></div>
+          <div class="row"><span class="col">title</span><span class="type">text</span></div>
+          <div class="row"><span class="col">storage_key</span><span class="type">text</span></div>
+          <div class="row"><span class="col">uploaded_at</span><span class="type">timestamptz</span></div>
+        </div>
+      </div>
+      <!-- lab_results -->
+      <div class="table-card reveal">
+        <div class="table-head"><span class="table-name">lab_results</span><span class="table-icon">8 cols</span></div>
+        <div class="table-rows">
+          <div class="row"><span class="col">id <span class="badge pk">PK</span></span><span class="type">uuid</span></div>
+          <div class="row"><span class="col">document_id <span class="badge fk">FK</span></span><span class="type">uuid</span></div>
+          <div class="row"><span class="col">analyte</span><span class="type">text</span></div>
+          <div class="row"><span class="col">value</span><span class="type">numeric</span></div>
+          <div class="row"><span class="col">ref_range</span><span class="type">tstzrange</span></div>
+        </div>
+      </div>
+      <!-- conversations -->
+      <div class="table-card reveal">
+        <div class="table-head"><span class="table-name">conversations</span><span class="table-icon">5 cols</span></div>
+        <div class="table-rows">
+          <div class="row"><span class="col">id <span class="badge pk">PK</span></span><span class="type">uuid</span></div>
+          <div class="row"><span class="col">user_id <span class="badge fk">FK</span></span><span class="type">uuid</span></div>
+          <div class="row"><span class="col">title</span><span class="type">text</span></div>
+          <div class="row"><span class="col">created_at</span><span class="type">timestamptz</span></div>
+        </div>
+      </div>
+      <!-- messages -->
+      <div class="table-card reveal">
+        <div class="table-head"><span class="table-name">messages</span><span class="table-icon">6 cols</span></div>
+        <div class="table-rows">
+          <div class="row"><span class="col">id <span class="badge pk">PK</span></span><span class="type">uuid</span></div>
+          <div class="row"><span class="col">conversation_id <span class="badge fk">FK</span></span><span class="type">uuid</span></div>
+          <div class="row"><span class="col">role</span><span class="type">enum</span></div>
+          <div class="row"><span class="col">content</span><span class="type">text</span></div>
+          <div class="row"><span class="col">created_at</span><span class="type">timestamptz</span></div>
+        </div>
+      </div>
+      <!-- audit_log -->
+      <div class="table-card reveal">
+        <div class="table-head"><span class="table-name">audit_log</span><span class="table-icon">7 cols</span></div>
+        <div class="table-rows">
+          <div class="row"><span class="col">id <span class="badge pk">PK</span></span><span class="type">bigserial</span></div>
+          <div class="row"><span class="col">actor_id <span class="badge fk">FK</span></span><span class="type">uuid</span></div>
+          <div class="row"><span class="col">action</span><span class="type">text</span></div>
+          <div class="row"><span class="col">entity</span><span class="type">text</span></div>
+          <div class="row"><span class="col">at</span><span class="type">timestamptz</span></div>
+        </div>
+      </div>
+      <!-- usage_events -->
+      <div class="table-card reveal">
+        <div class="table-head"><span class="table-name">usage_events</span><span class="table-icon">6 cols</span></div>
+        <div class="table-rows">
+          <div class="row"><span class="col">id <span class="badge pk">PK</span></span><span class="type">bigserial</span></div>
+          <div class="row"><span class="col">user_id <span class="badge fk">FK</span></span><span class="type">uuid</span></div>
+          <div class="row"><span class="col">event_type</span><span class="type">text</span></div>
+          <div class="row"><span class="col">metadata</span><span class="type">jsonb</span></div>
+          <div class="row"><span class="col">at</span><span class="type">timestamptz</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="schema-note reveal">
+      <span><span class="legend-dot" style="background:var(--pk)"></span>Primary key</span>
+      <span><span class="legend-dot" style="background:var(--fk)"></span>Foreign key</span>
+      <span><span class="legend-dot" style="background:var(--muted)"></span>Unique constraint</span>
+      <span>8 tables · 3NF · FK-enforced integrity · full audit trail</span>
     </div>
   </div>
 </section>
 
-<!-- skills - TODO: add more projects here later -->
-<section id="skills">
-  <div class="full-width">
-    <p class="section-label">// Capabilities</p>
-    <div class="divider"></div>
-    <h2 class="section-title">What I Build &amp; Break</h2>
-    <div class="skills-grid">
-      <div class="skill-item">
-        <div class="skill-icon">01 &mdash; Frontend</div>
-        <div class="skill-name">UI Engineering</div>
-        <div class="skill-desc">React, Next.js, TypeScript — building fast, clean interfaces that actually work on all devices.</div>
+<!-- APIs -->
+<section id="apis" class="block">
+  <div class="wrap">
+    <div class="eyebrow reveal">API design</div>
+    <h2 class="section-title reveal">Endpoints that map to the model.</h2>
+    <p class="section-lead reveal">Resource-oriented routes, predictable status codes, and Pydantic schemas validating every boundary. A slice of the MedBridge surface:</p>
+
+    <div class="api-list">
+      <div class="endpoint reveal"><span class="method m-post">POST</span><span class="path">/auth/sessions</span><span class="ep-desc">Issue access + refresh tokens</span></div>
+      <div class="endpoint reveal"><span class="method m-get">GET</span><span class="path">/documents?<b>cursor</b>=&amp;<b>limit</b>=</span><span class="ep-desc">Cursor-paginated, owner-scoped</span></div>
+      <div class="endpoint reveal"><span class="method m-post">POST</span><span class="path">/documents</span><span class="ep-desc">Upload + queue extraction</span></div>
+      <div class="endpoint reveal"><span class="method m-get">GET</span><span class="path">/documents/<b>{id}</b>/lab-results</span><span class="ep-desc">Nested, FK-joined read</span></div>
+      <div class="endpoint reveal"><span class="method m-post">POST</span><span class="path">/conversations/<b>{id}</b>/messages</span><span class="ep-desc">Append message, stream reply</span></div>
+      <div class="endpoint reveal"><span class="method m-patch">PATCH</span><span class="path">/users/<b>{id}</b></span><span class="ep-desc">Partial update, role-guarded</span></div>
+      <div class="endpoint reveal"><span class="method m-del">DELETE</span><span class="path">/auth/sessions/<b>{id}</b></span><span class="ep-desc">Revoke + cascade cleanup</span></div>
+    </div>
+
+    <p class="api-foot reveal"><b>Conventions:</b> versioned under /v1 · errors as RFC-7807 problem+json · idempotency keys on writes · every mutation lands in audit_log.</p>
+  </div>
+</section>
+
+<!-- STACK -->
+<section id="stack" class="block" style="background:linear-gradient(180deg,var(--navy),var(--ink))">
+  <div class="wrap">
+    <div class="eyebrow reveal">What I build with</div>
+    <h2 class="section-title reveal">Backend, end to end.</h2>
+    <p class="section-lead reveal">From the schema migration to the response that ships.</p>
+
+    <div class="cap-grid">
+      <div class="cap reveal">
+        <div class="cap-num">01</div>
+        <h3>API Design</h3>
+        <p>Resource modeling, versioning, pagination, and validation at every boundary — not bolted on after.</p>
+        <div class="cap-tools"><span class="tool">FastAPI</span><span class="tool">Pydantic</span><span class="tool">REST</span><span class="tool">OpenAPI</span></div>
       </div>
-      <div class="skill-item">
-        <div class="skill-icon">02 &mdash; Backend</div>
-        <div class="skill-name">Server &amp; API</div>
-        <div class="skill-desc">Node.js, Python, REST &amp; GraphQL APIs — building the server side and making sure the data flows right.</div>
+      <div class="cap reveal">
+        <div class="cap-num">02</div>
+        <h3>Data Modeling</h3>
+        <p>Normalized schemas, deliberate keys and constraints, and indexes that match the access patterns.</p>
+        <div class="cap-tools"><span class="tool">PostgreSQL</span><span class="tool">Oracle SQL</span><span class="tool">3NF</span><span class="tool">Indexing</span></div>
       </div>
-      <div class="skill-item">
-        <div class="skill-icon">03 &mdash; Infrastructure</div>
-        <div class="skill-name">Cloud &amp; DevOps</div>
-        <div class="skill-desc">AWS, Docker, CI/CD pipelines — getting comfortable with the cloud and shipping code the right way.</div>
+      <div class="cap reveal">
+        <div class="cap-num">03</div>
+        <h3>ORM &amp; Migrations</h3>
+        <p>Declarative models, reversible migrations, and a schema history you can actually trust in production.</p>
+        <div class="cap-tools"><span class="tool">SQLAlchemy 2.0</span><span class="tool">Alembic</span></div>
       </div>
-      <div class="skill-item">
-        <div class="skill-icon">04 &mdash; Offensive Sec</div>
-        <div class="skill-name">Penetration Testing</div>
-        <div class="skill-desc">Web app and network assessments, CTF competitions, TryHackMe and HackTheBox — finding vulnerabilities in legal environments and learning how to fix them.</div>
+      <div class="cap reveal">
+        <div class="cap-num">04</div>
+        <h3>Auth &amp; Sessions</h3>
+        <p>Token issuance, refresh rotation, role-based access, and revocation that holds up under abuse.</p>
+        <div class="cap-tools"><span class="tool">JWT</span><span class="tool">OAuth2</span><span class="tool">RBAC</span></div>
       </div>
-      <div class="skill-item">
-        <div class="skill-icon">05 &mdash; Defensive Sec</div>
-        <div class="skill-name">Hardening &amp; Review</div>
-        <div class="skill-desc">OWASP Top 10, secure code practices, threat modeling — I write code with security in mind from the start.</div>
+      <div class="cap reveal">
+        <div class="cap-num">05</div>
+        <h3>Integrity &amp; Audit</h3>
+        <p>FK enforcement, transactional writes, and an append-only audit trail on every mutation.</p>
+        <div class="cap-tools"><span class="tool">Constraints</span><span class="tool">Transactions</span><span class="tool">Audit log</span></div>
       </div>
-      <div class="skill-item">
-        <div class="skill-icon">06 &mdash; Data</div>
-        <div class="skill-name">Databases &amp; Storage</div>
-        <div class="skill-desc">I've used PostgreSQL and MongoDB in my projects. I know how to write queries and set up schemas. I once optimized a slow query and felt like a genius.</div>
+      <div class="cap reveal">
+        <div class="cap-num">06</div>
+        <h3>Ship &amp; Run</h3>
+        <p>Containerized services, CI pipelines, and structured logging so issues are findable, not guessed at.</p>
+        <div class="cap-tools"><span class="tool">Docker</span><span class="tool">Kubernetes</span><span class="tool">Git / CI</span></div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- WORK -->
+<section id="work" class="block">
+  <div class="wrap">
+    <div class="eyebrow reveal">Selected work</div>
+    <h2 class="section-title reveal">Systems I've shipped.</h2>
+    <p class="section-lead reveal">Backend-first projects where the data model carried the weight.</p>
 
-<!-- certifications section -->
-<section id="certs" style="background:#050f19;padding:8rem 5vw;min-height:auto;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;">
-  <div class="full-width">
-    <p class="section-label">// Certifications</p>
-    <div class="divider"></div>
-    <h2 class="section-title">Coding Temple<br><span>Credentials</span></h2>
-    <p class="certs-sub">10 verified credentials from Coding Temple — <a class="certs-link" href="https://www.credential.net/profile/bennybailey791580/wallet" target="_blank">view full wallet ↗</a></p>
-    <div class="certs-grid">
-      <div class="cert-card cert-featured"><div class="cert-icon">01</div><div class="cert-name">Advanced Back-End Specialization</div><div class="cert-date">Coding Temple &nbsp;·&nbsp; 2026</div></div>
-      <div class="cert-card cert-featured"><div class="cert-icon">02</div><div class="cert-name">Advanced Front-End Specialization</div><div class="cert-date">Coding Temple &nbsp;·&nbsp; March 2026</div></div>
-      <div class="cert-card cert-featured"><div class="cert-icon">03</div><div class="cert-name">Advanced Python</div><div class="cert-date">Coding Temple &nbsp;·&nbsp; 2026</div></div>
-      <div class="cert-card cert-featured"><div class="cert-icon">04</div><div class="cert-name">Relational Databases &amp; REST API Development</div><div class="cert-date">Coding Temple &nbsp;·&nbsp; March 2026</div></div>
-      <div class="cert-card"><div class="cert-icon">05</div><div class="cert-name">Single Page Apps with React</div><div class="cert-date">Coding Temple &nbsp;·&nbsp; 2026</div></div>
-      <div class="cert-card"><div class="cert-icon">06</div><div class="cert-name">JavaScript Mastery</div><div class="cert-date">Coding Temple &nbsp;·&nbsp; 2026</div></div>
-      <div class="cert-card"><div class="cert-icon">07</div><div class="cert-name">Back-End Specialization Foundations</div><div class="cert-date">Coding Temple &nbsp;·&nbsp; 2026</div></div>
-      <div class="cert-card"><div class="cert-icon">08</div><div class="cert-name">Front-End Specialization Foundations</div><div class="cert-date">Coding Temple &nbsp;·&nbsp; March 2026</div></div>
-      <div class="cert-card"><div class="cert-icon">09</div><div class="cert-name">Python Foundations for Software Engineering</div><div class="cert-date">Coding Temple &nbsp;·&nbsp; 2026</div></div>
-      <div class="cert-card"><div class="cert-icon">10</div><div class="cert-name">Web Development with HTML &amp; CSS</div><div class="cert-date">Coding Temple &nbsp;·&nbsp; 2026</div></div>
+    <div class="work-grid">
+      <div class="project reveal">
+        <div class="project-meta"><span>Health Records · AI</span><span>Backend Lead</span></div>
+        <h3>MedBridge</h3>
+        <p>Patient-facing platform for medical records and lab data with an AI assistant layer. I own the 8-table PostgreSQL schema, the FastAPI service, auth/session design, and the audit trail across every write.</p>
+        <div class="project-stack"><span class="tool">FastAPI</span><span class="tool">PostgreSQL</span><span class="tool">SQLAlchemy</span><span class="tool">Pydantic</span></div>
+      </div>
+      <div class="project reveal">
+        <div class="project-meta"><span>AI SaaS</span><span>Full Backend</span></div>
+        <h3>Thumblytics</h3>
+        <p>Analysis service scoring YouTube and TikTok thumbnails and titles. Designed the ingestion API, the scoring pipeline contracts, and the data layer that persists every analysis run.</p>
+        <div class="project-stack"><span class="tool">Python</span><span class="tool">REST API</span><span class="tool">PostgreSQL</span></div>
+      </div>
+      <div class="project reveal">
+        <div class="project-meta"><span>Internal Tooling</span><span>Architect</span></div>
+        <h3>SmallBiz Service Layer</h3>
+        <p>Backend for a desktop business app — schema design, a clean REST surface, and a migration path that let the data model evolve without breaking existing records.</p>
+        <div class="project-stack"><span class="tool">Python</span><span class="tool">SQL</span><span class="tool">Migrations</span></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- security section - background image goes here -->
-<section id="security">
-  <div class="sec-bg"></div>
-  <div class="sec-overlay"></div>
-  <div class="sec-content">
-    <p class="section-label">// Offensive Security</p>
-    <div class="divider"></div>
-    <h2 class="section-title">Security<br>Done Right</h2>
-    <p class="about-text sec-text">I've trained on TryHackMe and HackTheBox, studied real-world CVEs, and practice finding vulnerabilities the right way. Understanding how attacks work makes me a better developer and a sharper security tester.</p>
-    <div class="sec-pills">
-      <span class="pill">OWASP Top 10</span>
-      <span class="pill">SQLi / XSS</span>
-      <span class="pill">Network Recon</span>
-      <span class="pill">Metasploit</span>
-      <span class="pill">Burp Suite</span>
-      <span class="pill">Kali Linux</span>
-      <span class="pill">Social Engineering</span>
-      <span class="pill">CVE Research</span>
-    </div>
-    <div class="hero-btns sec-btns">
-      <a class="btn btn-fill" href="#contact">Request an Assessment</a>
+<!-- CERTS -->
+<section id="certs" class="block" style="background:linear-gradient(180deg,var(--navy),var(--ink))">
+  <div class="wrap">
+    <div class="eyebrow reveal">Credentials</div>
+    <h2 class="section-title reveal">Data &amp; infrastructure certs.</h2>
+    <p class="section-lead reveal">Focused on the layer I work in — databases, SQL, and the platforms that run the services.</p>
+
+    <div class="cert-grid">
+      <div class="cert reveal"><div class="cert-mark">SQL</div><div><div class="cert-name">Oracle SQL Certified Associate</div><div class="cert-sub">Relational · query design</div></div></div>
+      <div class="cert reveal"><div class="cert-mark">PG</div><div><div class="cert-name">PostgreSQL Fundamentals</div><div class="cert-sub">Schema · performance</div></div></div>
+      <div class="cert reveal"><div class="cert-mark">DKR</div><div><div class="cert-name">Docker Certified</div><div class="cert-sub">Containers · images</div></div></div>
+      <div class="cert reveal"><div class="cert-mark">K8s</div><div><div class="cert-name">Kubernetes</div><div class="cert-sub">Orchestration · deploys</div></div></div>
     </div>
   </div>
 </section>
 
-<!-- contact - need to hook up a real form eventually -->
-<section id="contact">
-  <div>
-    <p class="section-label">// Contact</p>
-    <div class="divider divider-center"></div>
-    <h2 class="section-title">Let's <span>Work</span><br>Together</h2>
-    <p class="contact-sub">I'm a bootcamp grad looking for my first role in tech. Whether you need a developer, a security tester, or someone who can do both — I'd love to connect.</p>
-    <div id="email-reveal" class="email-reveal" onclick="revealEmail()" title="Click to reveal email">
-      <span id="email-placeholder" class="email-placeholder">
-        <span class="email-dots">&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;</span>
-        <span class="email-hint">click to reveal email</span>
-      </span>
-      <a id="email-link" class="contact-email email-hidden" href="#"><span class="__cf_email__" data-cfemail="99fdf8f7f0fcf5d9fdf8f7f0fcf5fbf8f0f5fce0b7fdfcef">[email&#160;protected]</span></a>
-    </div>
-    <div class="hero-btns hero-btns-center">
-      <a class="btn btn-fill" href="/cdn-cgi/l/email-protection#a1c5c0cfc8c4cde1c5c0cfc8c4cdc3c0c8cdc4d88fc5c4d7">Send a Message</a>
-      <a class="btn" href="#hero">Back to Top</a>
-    </div>
-    <div class="social-row">
-      <a class="social-link" href="https://github.com/Pr1nc3B33" target="_blank">GitHub</a>
-      <a class="social-link" href="https://www.linkedin.com/in/benny-bailey-69b0363ba/" target="_blank">LinkedIn</a>
-      <a class="social-link" href="#">Twitter / X</a>
+<!-- CONTACT -->
+<section id="contact" class="block">
+  <div class="wrap">
+    <div class="eyebrow reveal" style="justify-content:center">Contact</div>
+    <h2 class="section-title reveal">Let's design something that scales.</h2>
+    <p class="section-lead reveal" style="margin-left:auto;margin-right:auto;text-align:center">Building a backend, untangling a schema, or need an API that won't fall over? I'd like to hear about it.</p>
+    <a class="contact-email reveal" href="mailto:daniel@danielbailey.dev">daniel@danielbailey.dev</a>
+    <div class="social-row reveal">
+      <a class="social-link" href="https://github.com/Pr1nc3B33" target="_blank" rel="noopener">GitHub</a>
+      <a class="social-link" href="https://www.linkedin.com/in/benny-bailey-69b0363ba" target="_blank" rel="noopener">LinkedIn</a>
       <a class="social-link" href="Daniel_Bailey_Resume.pdf" download="Daniel_Bailey_Resume.pdf">Resume PDF</a>
     </div>
   </div>
 </section>
 
-<!-- footer -->
+<!-- FOOTER -->
 <footer>
-  <span class="footer-mono">&copy; 2026 Daniel Bailey</span>
-  <span class="footer-mono">Full Stack &nbsp;·&nbsp; Penetration Testing</span>
+  <span class="footer-mono">© 2026 Daniel Bailey</span>
+  <span class="footer-mono">Backend API Architect · Databases &amp; Schemas</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
+  // Nav frost on scroll
+  const navbar = document.getElementById('navbar');
+  const onScroll = () => navbar.classList.toggle('scrolled', window.scrollY > 40);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 
-  // email reveal - typescript style with type annotations in comments
-  function revealEmail(): void {
-    const placeholder = document.getElementById('email-placeholder') as HTMLElement;
-    const emailLink = document.getElementById('email-link') as HTMLAnchorElement;
-    const container = document.getElementById('email-reveal') as HTMLElement;
-    
-    if (!placeholder || !emailLink || !container) return;
-    
-    // animate out the dots
-    placeholder.style.opacity = '0';
-    placeholder.style.transform = 'translateY(-8px)';
-    
-    setTimeout(() => {
-      placeholder.style.display = 'none';
-      emailLink.classList.remove('email-hidden');
-      emailLink.style.opacity = '0';
-      emailLink.style.transform = 'translateY(8px)';
-      
-      // animate in the email
-      requestAnimationFrame(() => {
-        emailLink.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-        emailLink.style.opacity = '1';
-        emailLink.style.transform = 'translateY(0)';
-        emailLink.href = 'mailto:daniel@danielbailey.dev';
-      });
-  
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach((el) => observer.observe(el));
+</script>
+</body>
+</html>
